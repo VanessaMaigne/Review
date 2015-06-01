@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class Utils {
 
     /** Algorithm founded at http://www.gecif.net/articles/mathematiques/nombres_premiers/ **/
-    public static boolean isPrimeNumber(final Long number){
+    public static boolean isPrimeNumber2(final Long number){
         if(number == 2) return true;
         if(number == 0 || number == 1 || number % 2 == 0) return false;
 
@@ -22,6 +22,19 @@ public abstract class Utils {
             if(number % a == 0)
                 stopLoop = true;
             a=a+2;
+        }
+        return isPrime;
+    }
+
+    public static boolean isPrimeNumber(final Long n){
+        if(n==2) return true;
+        if(n <= 1 || n%2 == 0) return false;
+        int i=3;
+
+        boolean isPrime = true;
+        while(isPrime && i<=Math.sqrt(n)){
+            if(n%i == 0) isPrime = false;
+            i+=2;
         }
         return isPrime;
     }
