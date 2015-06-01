@@ -7,7 +7,7 @@ public class EasySolutionTest {
 
     @Test //#19
     public void testListNode(){
-        System.out.print("TEST #19 LIST NODE : ");
+        System.out.print("TEST #19 List Node");
         ListNode node = new ListNode(1);
         ListNode resultNode = new ListNode(1);
         ListNode listNode;
@@ -56,7 +56,7 @@ public class EasySolutionTest {
 
     @Test  //#125
     public void testIsPalindrome(){
-        System.out.print("TEST #125 PALINDROME : ");
+        System.out.print("TEST #125 Palindrome");
         boolean isPalindrome;
 
         isPalindrome = sol.isPalindrome("");
@@ -84,7 +84,7 @@ public class EasySolutionTest {
 
     @Test  //#8
     public void testAtoi(){
-        System.out.print("TEST #8 ATOI : ");
+        System.out.print("TEST #8 Atoi");
         int result;
 
         result = sol.myAtoi("         ");
@@ -157,7 +157,7 @@ public class EasySolutionTest {
 
     @Test  //#6
     public void testConvertZigzag(){
-        System.out.print("TEST # CONVERT ZIZAG : ");
+        System.out.print("TEST #6 Convert Zigzag");
         String result;
 
         result = sol.convert(null, 3);
@@ -186,4 +186,121 @@ public class EasySolutionTest {
         result = sol.convert("ABCDEFGHIJKLMNOPQRSTUVW", 6);
         Assert.assertEquals(result, "AJSBGKPTCLUDHMQVENWFIOR");
     }
+
+    @Test  //#205
+    public void testIsomorphicString(){
+        System.out.print("TEST #205 Isomorphic String");
+        boolean result;
+
+        result = sol.isIsomorphic("egg", "add");
+        Assert.assertTrue(result);
+        result = sol.isIsomorphic("foo", "bar");
+        Assert.assertFalse(result);
+        result = sol.isIsomorphic("paper", "title");
+        Assert.assertTrue(result);
+        result = sol.isIsomorphic("ab", "aa");
+        Assert.assertFalse(result);
+    }
+
+    @Test  //#206
+    public void testRevertListNode(){
+        System.out.print("TEST #206 Revert List Node");
+        ListNode result;
+        ListNode node = new ListNode(1);
+        ListNode resultNode = new ListNode(2);
+
+        result = sol.reverseList(null);
+        Assert.assertEquals(result, null);
+        result = sol.reverseList(node);
+        Assert.assertEquals(result, new ListNode(1));
+        node.next = new ListNode(2);
+        resultNode.next = new ListNode(1);
+        result = sol.reverseList(node);
+        Assert.assertEquals(result, resultNode);
+
+        node.next.next = new ListNode(3);
+        node.next.next.next = new ListNode(4);
+        resultNode = new ListNode(4);
+        resultNode.next = new ListNode(3);
+        resultNode.next.next = new ListNode(2);
+        resultNode.next.next.next = new ListNode(1);
+        result = sol.reverseList(node);
+        Assert.assertEquals(result, resultNode);
+    }
+
+    @Test  //#203
+    public void testRemoveListNode(){
+        System.out.print("TEST #203 Remove List Node");
+        ListNode result;
+        ListNode node = new ListNode(1);
+        ListNode resultNode;
+
+        result = sol.removeElements(null, 3);
+        Assert.assertEquals(result, null);
+        result = sol.removeElements(node, 3);
+        Assert.assertEquals(result, new ListNode(1));
+        result = sol.removeElements(node, 1);
+        Assert.assertEquals(result, null);
+        node.next = new ListNode(1);
+        result = sol.removeElements(node, 1);
+        Assert.assertEquals(result, null);
+
+        node.next = new ListNode(1);
+        node.next.next = new ListNode(1);
+        result = sol.removeElements(node, 1);
+        Assert.assertEquals(result, null);
+        node.next = new ListNode(1);
+        node.next.next = new ListNode(1);
+        node.next.next.next = new ListNode(1);
+        result = sol.removeElements(node, 1);
+        Assert.assertEquals(result, null);
+
+        node.next = new ListNode(2);
+        result = sol.removeElements(node, 1);
+        Assert.assertEquals(result, new ListNode(2));
+
+        node.next = new ListNode(1);
+        node.next.next = new ListNode(3);
+        result = sol.removeElements(node, 1);
+        Assert.assertEquals(result, new ListNode(3));
+
+        node.next.next.next = new ListNode(1);
+        node.next.next.next.next = new ListNode(1);
+        result = sol.removeElements(node, 1);
+        Assert.assertEquals(result, new ListNode(3));
+
+
+        node.next = new ListNode(1);
+        node.next.next = new ListNode(3);
+        node.next.next.next = new ListNode(4);
+        node.next.next.next.next = new ListNode(3);
+        resultNode = new ListNode(1);
+        resultNode.next = new ListNode(1);
+        resultNode.next.next = new ListNode(4);
+        result = sol.removeElements(node, 3);
+        Assert.assertEquals(result, resultNode);
+    }
+
+    @Test  //#204
+    public void testCountPrimes(){
+        System.out.print("TEST #204 Count Primes");
+        int result;
+
+        result = sol.countPrimes(0);
+        Assert.assertEquals(result, 0);
+        result = sol.countPrimes(1);
+        Assert.assertEquals(result, 0);
+        result = sol.countPrimes(2);
+        Assert.assertEquals(result, 1);
+        result = sol.countPrimes(3);
+        Assert.assertEquals(result, 2);
+        result = sol.countPrimes(10);
+        Assert.assertEquals(result, 4);
+        result = sol.countPrimes(11);
+        Assert.assertEquals(result, 5);
+        result = sol.countPrimes(999983);
+//        Assert.assertEquals(result, 5);
+        String paf = "pif";
+    }
+
 }

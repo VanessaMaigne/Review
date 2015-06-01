@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class EasySolutionImpl implements EasySolution {
     /**
      * #19 : Remove Nth Node From End of List
@@ -34,6 +36,28 @@ public class EasySolutionImpl implements EasySolution {
 
             return head;
         }
+    }
+
+    // Solution from https://leetcode.com/discuss/37436/my-simple-java-solution
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null) {
+            fast = fast.next;
+            if(n-- < 0) {
+                slow = slow.next;
+            }
+        }
+
+        if(n == 0) {
+            head = head.next;
+        } else if(n < 0) {
+            slow.next = slow.next.next;
+        } else {
+            return null;
+        }
+
+        return head;
     }
 
     /**
@@ -149,5 +173,118 @@ public class EasySolutionImpl implements EasySolution {
         }
         return result;
     }
+
+
+    /**
+     * #205 : Isomorphic Strings
+     */
+    public boolean isIsomorphic(String s, String t) {
+        if(s.length() != t.length()) return false;
+
+        int i=0;
+        boolean isIsomorphic = true;
+        HashMap<Character, Character> mapLeftToRight = new HashMap<Character, Character>();
+        HashMap<Character, Character> mapRightToLeft = new HashMap<Character, Character>();
+
+        while(i<s.length() && isIsomorphic){
+            if(mapLeftToRight.get(s.charAt(i)) != null){
+                isIsomorphic = t.charAt(i) == mapLeftToRight.get(s.charAt(i));
+            } else {
+                mapLeftToRight.put(s.charAt(i), t.charAt(i));
+                if(mapRightToLeft.get(t.charAt(i)) != null) isIsomorphic = false;
+                else mapRightToLeft.put(t.charAt(i), s.charAt(i));
+            }
+            i++;
+        }
+        return isIsomorphic;
+    }
+
+
+    /**
+     * #206 : Reverse Linked List
+     */
+    public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null) return head;
+
+        else {
+            ListNode result = null;
+
+            while(head != null){
+                ListNode t = result;
+                result = new ListNode(head.val);
+                result.next = t;
+                head = head.next;
+            }
+
+            return result;
+        }
+    }
+
+    // Solution from https://leetcode.com/discuss/37804/iteratively-and-recursively-java-solution
+    public ListNode reverseList2(ListNode head) {
+        if(head == null) return head;
+
+        ListNode next = head.next;
+        head.next = null;
+
+        while(next != null){
+            ListNode temp = next.next;
+            next.next = head;
+            head = next;
+            next = temp;
+        }
+        return head;
+    }
+
+
+    /**
+     * #203 : Remove Linked List Elements
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null) return head;
+
+        ListNode temp = head;
+
+        while(temp != null){
+            if(temp.val == val){
+                temp = temp.next;
+                head = temp;
+            } else if(temp.next != null && temp.next.val == val) temp.next = temp.next.next;
+            else temp = temp.next;
+        }
+
+        if(head != null && head.next == null && head.val == val) return null;
+        else return head;
+    }
+
+
+    /**
+     * #204 : Count Primes
+     */
+    public int countPrimes(int n) {
+        if(n <= 1) return 0;
+
+        int number = 0;
+        for(int i=2; i<=n; i++){
+            if(isPrimeNumber((long) i))
+                number++;
+        }
+        return number;
+    }
+
+    public boolean isPrimeNumber(final Long n){
+        if(n==2) return true;
+        if(n <= 1 || n%2 == 0) return false;
+        int i=3;
+
+        boolean isPrime = true;
+        while(isPrime && i<=Math.sqrt(n)){
+            if(n%i == 0) isPrime = false;
+            i+=2;
+        }
+        return isPrime;
+    }
+
+
 }
 
