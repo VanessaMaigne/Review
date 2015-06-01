@@ -1,4 +1,4 @@
-public class Solution {
+public class EasySolutionImpl implements EasySolution {
     /**
      * #19 : Remove Nth Node From End of List
      */

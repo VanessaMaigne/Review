@@ -1,9 +1,9 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-public class LeetcodeTest {
+public class EasySolutionTest {
 
-    Solution sol = new Solution();
+    EasySolution sol = new EasySolutionImpl();
 
     @Test //#19
     public void testListNode(){
