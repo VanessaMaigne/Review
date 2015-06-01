@@ -67,33 +67,52 @@ public class EasySolutionImpl implements EasySolution {
      * #8 : String to Integer (atoi)
      */
     public int myAtoi(String str) {
-        if(str.isEmpty())
-            return 0;
+        if(str.isEmpty() || str == null) return 0;
 
-        str = str.replaceAll(" ","");
+        String[] strArray = str.split(" ");
+        if(strArray.length == 0) return 0;
+
+        int i=0;
+        while(strArray[i].equals("")) i++;
+        str = strArray[i];
+
         char firstChar = str.charAt(0);
-        if(!Character.isDigit(firstChar) && firstChar != '+' && firstChar != '-')
-            return 0;
+        if(!Character.isDigit(firstChar) && firstChar != '+' && firstChar != '-') return 0;
+
+        boolean isNegatif = str.charAt(0) == '-';
+        if(str.charAt(0) == '+' || str.charAt(0) == '-')
+            str = str.substring(1, str.length());
+
+        if(str.isEmpty() || !Character.isDigit(str.charAt(0))) return 0;
 
         try{
-            if(str.charAt(0) == '+' || str.charAt(0) == '-')
-                str = str.substring(1, str.length());
             int value = Integer.parseInt(str);
-            return value;
+            return isNegatif ? -value : value;
+
         } catch(NumberFormatException e){
-            int i=0;
+            i=0;
             String temp="";
             while(i<str.length() && Character.isDigit(str.charAt(i))){
                 temp += str.charAt(i);
                 i++;
             }
+
             if(temp.isEmpty()) return 0;
             else {
                 String maxStr = String.valueOf(Integer.MAX_VALUE);
                 String minStr = String.valueOf(Integer.MIN_VALUE);
-                if(firstChar == '+' && temp.length() >= maxStr.length()) return Integer.MAX_VALUE;
-                else if(firstChar == '-' && temp.length() >= minStr.length()) return Integer.MIN_VALUE;
-                else return myAtoi(temp);
+
+                if(isNegatif){
+                    if(temp.length() > minStr.length()-1) return Integer.MIN_VALUE;
+                    else if(temp.length() == minStr.length()-1
+                            && temp.compareTo(minStr.substring(1, minStr.length())) >= 0) return Integer.MIN_VALUE;
+                    else return myAtoi("-"+temp);
+
+                } else {
+                    if(temp.length() > maxStr.length()) return Integer.MAX_VALUE;
+                    else if(temp.length() == maxStr.length() && temp.compareTo(maxStr) >= 0) return Integer.MAX_VALUE;
+                    else return myAtoi(temp);
+                }
             }
         }
     }
