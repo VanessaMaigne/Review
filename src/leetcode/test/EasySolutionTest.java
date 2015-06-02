@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -313,13 +314,12 @@ public class EasySolutionTest {
 
     @Test  //#102
     public void testBinaryTree(){
-        System.out.print("TEST #102 Binary Tree");
+        System.out.print("TEST #102 Binary Tree _ BFS");
         TreeNode tree = new TreeNode(3);
         List<List<Integer>> listResult;
 
         List<List<Integer>> treeList = new ArrayList<List<Integer>>();
-        ArrayList<Integer> head = new ArrayList<Integer>() {{ add(3); }};
-        treeList.add(head);
+        treeList.add(new ArrayList<Integer>() {{ add(3); }});
 
         listResult = sol.levelOrder(null);
         Assert.assertEquals(listResult, new ArrayList<List<Integer>>());
@@ -361,5 +361,65 @@ public class EasySolutionTest {
         for(int i=0; i<nums.length; i++){
             Assert.assertEquals(result[i], nums[i]);
         }
+    }
+
+    @Test  //#14
+    public void testCommonPrefix(){
+        System.out.print("TEST #14 Common Prefix");
+        String result;
+
+
+        result = sol.longestCommonPrefix(null);
+        Assert.assertEquals(result, "");
+        result = sol.longestCommonPrefix(new String[0]);
+        Assert.assertEquals(result, "");
+        result = sol.longestCommonPrefix(new String[]{"a", "b"});
+        Assert.assertEquals(result, "");
+        result = sol.longestCommonPrefix(new String[]{"aa", "a"});
+        Assert.assertEquals(result, "a");
+        result = sol.longestCommonPrefix(new String[]{"Fincher"});
+        Assert.assertEquals(result, "fincher");
+
+        result = sol.longestCommonPrefix(new String[]{"fin", "fIn", "fin"});
+        Assert.assertEquals(result, "fin");
+        result = sol.longestCommonPrefix(new String[]{"", "", ""});
+        Assert.assertEquals(result, "");
+        result = sol.longestCommonPrefix(new String[]{"", "fin", ""});
+        Assert.assertEquals(result, "");
+        result = sol.longestCommonPrefix(new String[]{"fin", "", ""});
+        Assert.assertEquals(result, "");
+
+        result = sol.longestCommonPrefix(new String[]{"Fincher", "fIn", "finasdqsdlkaze"});
+        Assert.assertEquals(result, "fin");
+    }
+
+    @Test  //#109
+    public void testBinaryTreeII(){
+        System.out.print("TEST #109 Binary Tree II _ BFS");
+        TreeNode tree = new TreeNode(3);
+        List<List<Integer>> listResult;
+
+        List<List<Integer>> treeList = new ArrayList<List<Integer>>();
+        treeList.add(new ArrayList<Integer>() {{ add(3); }});
+
+        listResult = sol.levelOrderBottom(null);
+        Assert.assertEquals(listResult, new ArrayList<List<Integer>>());
+        listResult = sol.levelOrderBottom(tree);
+        Assert.assertEquals(listResult, treeList);
+
+        tree.left = new TreeNode(9);
+        tree.right = new TreeNode(20);
+        tree.left.left = new TreeNode(10);
+        tree.left.right = new TreeNode(11);
+        tree.left.right.right = new TreeNode(12);
+        tree.right.left = new TreeNode(15);
+        tree.right.right = new TreeNode(7);
+        treeList = new ArrayList<List<Integer>>();
+        treeList.add(new ArrayList<Integer>() {{ add(12);}});
+        treeList.add(new ArrayList<Integer>() {{ add(10); add(11); add(15); add(7); }});
+        treeList.add(new ArrayList<Integer>() {{ add(9); add(20);}});
+        treeList.add(new ArrayList<Integer>() {{ add(3); }});
+        listResult = sol.levelOrderBottom(tree);
+        Assert.assertEquals(listResult, treeList);
     }
 }

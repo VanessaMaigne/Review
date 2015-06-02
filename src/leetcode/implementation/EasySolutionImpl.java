@@ -307,6 +307,7 @@ public class EasySolutionImpl implements EasySolution {
 
     /**
      * #102 : Binary Tree Level Order Traversal
+     * BFS
      */
     public List<List<Integer>> levelOrder(TreeNode root) {
         if(root == null) return new ArrayList<List<Integer>>();
@@ -350,5 +351,79 @@ public class EasySolutionImpl implements EasySolution {
                 nums[i] = result[i];
             }
         }
+    }
+
+
+    /**
+     * #14 : Longest Common Prefix
+     */
+    public String longestCommonPrefix(String[] strs) {
+        if(strs == null || strs.length == 0) return "";
+        if(strs.length == 1) return strs[0].toLowerCase();
+
+        String prefix = "";
+        boolean isValidPrefix = true;
+        int j=1;
+        while(j<=strs[0].length() && isValidPrefix){
+            prefix = strs[0].toLowerCase().substring(0, j);
+            int i=1;
+            while(i<strs.length && isValidPrefix){
+                if(j<=strs[i].length()) isValidPrefix = prefix.equals(strs[i].toLowerCase().substring(0, j));
+                else isValidPrefix = false;
+                i++;
+            }
+            j++;
+        }
+
+        if(isValidPrefix) return prefix;
+        else if(prefix.length() > 0 ) return prefix.substring(0, prefix.length()-1);
+        else return "";
+    }
+
+
+    /**
+     * #109 : Binary Tree Level Order Traversal II
+     */
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        if(root == null) return new ArrayList<List<Integer>>();
+
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> nodeList = new ArrayList<Integer>();
+
+        Deque<TreeNode> mainQueue = new LinkedList<TreeNode>();
+        Deque<TreeNode> childrenQueue = new LinkedList<TreeNode>();
+
+        mainQueue.add(root);
+        while(!mainQueue.isEmpty()){
+            TreeNode node = mainQueue.remove();
+            nodeList.add(node.val);
+
+            if(node.left != null) childrenQueue.add(node.left);
+            if(node.right != null) childrenQueue.add(node.right);
+
+            if(mainQueue.isEmpty()){
+                result.add(0, nodeList);
+                mainQueue = childrenQueue;
+                childrenQueue = new LinkedList<TreeNode>();
+                nodeList = new ArrayList<Integer>();
+            }
+        }
+
+        return result;
+    }
+
+    // Solution from https://leetcode.com/discuss/27826/my-java-implementation-using-arraylist
+    public List<List<Integer>> levelOrderBottom2(TreeNode root) {
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        traverse(list, 0 , root);
+        return list;
+    }
+
+    private void traverse(List<List<Integer>> list, int level, TreeNode node){
+        if(node == null) return;
+        if(list.size() - 1 < level) list.add(0, new ArrayList<Integer>());
+        list.get(list.size() - level - 1).add(node.val);
+        traverse(list, level + 1, node.left);
+        traverse(list, level + 1, node.right);
     }
 }

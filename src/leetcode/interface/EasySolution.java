@@ -26,4 +26,8 @@ public interface EasySolution {
 
     public void rotate(int[] nums, int k); //#189 : Rotate Array
 
+    public String longestCommonPrefix(String[] strs); //#14 : Longest Common Prefix
+
+    public List<List<Integer>> levelOrderBottom(TreeNode root); //#109 : Binary Tree Level Order Traversal II
+
 }
