@@ -1,3 +1,5 @@
+import java.util.List;
+
 public interface EasySolution {
 
     public ListNode removeNthFromEnd(ListNode head, int n); //#19 : Remove Nth Node From End of List
@@ -18,5 +20,10 @@ public interface EasySolution {
     public ListNode removeElements(ListNode head, int val); //#203 : Remove Linked List Elements
 
     public int countPrimes(int n); //#204 : Count Primes
+    public int countPrimes2(int n);
+
+    public List<List<Integer>> levelOrder(TreeNode root); //#102 : Binary Tree Level Order Traversal
+
+    public void rotate(int[] nums, int k); //#189 : Rotate Array
 
 }

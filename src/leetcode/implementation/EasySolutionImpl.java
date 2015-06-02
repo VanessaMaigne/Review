@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.*;
 
 public class EasySolutionImpl implements EasySolution {
     /**
@@ -261,11 +261,11 @@ public class EasySolutionImpl implements EasySolution {
     /**
      * #204 : Count Primes
      */
-    public int countPrimes(int n) {
-        if(n <= 1) return 0;
+    public int countPrimes(int n) { // n excluded
+        if(n <= 2) return 0;
 
-        int number = 0;
-        for(int i=2; i<=n; i++){
+        int number = 1;
+        for(int i=3; i<n; i+=2){
             if(isPrimeNumber((long) i))
                 number++;
         }
@@ -285,6 +285,70 @@ public class EasySolutionImpl implements EasySolution {
         return isPrime;
     }
 
+    // Version with Eratosthene crible
+    public int countPrimes2(int n){
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        numbers.add(2);
 
+        for(int i=3; i<=n; i+=2){
+            int j=0;
+            boolean isPrime = true;
+            while(j<numbers.size() && isPrime){
+                if(i%numbers.get(j) == 0) isPrime = false;
+                j++;
+            }
+            if(isPrime)
+                numbers.add(i);
+        }
+
+        return numbers.size();
+    }
+
+
+    /**
+     * #102 : Binary Tree Level Order Traversal
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        if(root == null) return new ArrayList<List<Integer>>();
+
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> nodeList = new ArrayList<Integer>();
+
+        Deque<TreeNode> mainQueue = new LinkedList<TreeNode>();
+        Deque<TreeNode> childrenQueue = new LinkedList<TreeNode>();
+
+        mainQueue.add(root);
+        while(!mainQueue.isEmpty()){
+            TreeNode node = mainQueue.remove();
+            nodeList.add(node.val);
+
+            if(node.left != null) childrenQueue.add(node.left);
+            if(node.right != null) childrenQueue.add(node.right);
+
+            if(mainQueue.isEmpty()){
+                result.add(nodeList);
+                mainQueue = childrenQueue;
+                childrenQueue = new LinkedList<TreeNode>();
+                nodeList = new ArrayList<Integer>();
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * #189 : Rotate Array
+     */
+    public void rotate(int[] nums, int k) {
+        if(nums != null && k > 0){
+            int[] result = new int[nums.length];
+            for(int i=0; i<nums.length; i++){
+                int newPosition = i+k >= nums.length ? (i+k)%nums.length : i+k;
+                result[newPosition] = nums[i];
+            }
+            for(int i=0; i<nums.length; i++){
+                nums[i] = result[i];
+            }
+        }
+    }
 }
-

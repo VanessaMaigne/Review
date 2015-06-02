@@ -1,6 +1,9 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EasySolutionTest {
 
     EasySolution sol = new EasySolutionImpl();
@@ -291,16 +294,72 @@ public class EasySolutionTest {
         result = sol.countPrimes(1);
         Assert.assertEquals(result, 0);
         result = sol.countPrimes(2);
-        Assert.assertEquals(result, 1);
+        Assert.assertEquals(result, 0);
         result = sol.countPrimes(3);
-        Assert.assertEquals(result, 2);
+        Assert.assertEquals(result, 1);
         result = sol.countPrimes(10);
         Assert.assertEquals(result, 4);
         result = sol.countPrimes(11);
+        Assert.assertEquals(result, 4);
+        result = sol.countPrimes(12);
         Assert.assertEquals(result, 5);
+        result = sol.countPrimes(499979);
+        Assert.assertEquals(result, 41537);
         result = sol.countPrimes(999983);
-//        Assert.assertEquals(result, 5);
-        String paf = "pif";
+        Assert.assertEquals(result, 78497);
+        result = sol.countPrimes(1500000);
+        Assert.assertEquals(result, 114155);
     }
 
+    @Test  //#102
+    public void testBinaryTree(){
+        System.out.print("TEST #102 Binary Tree");
+        TreeNode tree = new TreeNode(3);
+        List<List<Integer>> listResult;
+
+        List<List<Integer>> treeList = new ArrayList<List<Integer>>();
+        ArrayList<Integer> head = new ArrayList<Integer>() {{ add(3); }};
+        treeList.add(head);
+
+        listResult = sol.levelOrder(null);
+        Assert.assertEquals(listResult, new ArrayList<List<Integer>>());
+        listResult = sol.levelOrder(tree);
+        Assert.assertEquals(listResult, treeList);
+
+        tree.left = new TreeNode(9);
+        tree.right = new TreeNode(20);
+        tree.left.left = new TreeNode(10);
+        tree.left.right = new TreeNode(11);
+        tree.left.right.right = new TreeNode(12);
+        tree.right.left = new TreeNode(15);
+        tree.right.right = new TreeNode(7);
+        treeList.add(new ArrayList<Integer>() {{ add(9); add(20);}});
+        treeList.add(new ArrayList<Integer>() {{ add(10); add(11); add(15); add(7); }});
+        treeList.add(new ArrayList<Integer>() {{ add(12);}});
+        listResult = sol.levelOrder(tree);
+        Assert.assertEquals(listResult, treeList);
+    }
+
+    @Test  //#189
+    public void testRotateArray(){
+        System.out.print("TEST #189 Rotate Array");
+        int[] nums;
+        int[] result = new int[]{5,6,7,1,2,3,4};
+
+        nums = null;
+        sol.rotate(nums, 3);
+        Assert.assertEquals(nums, null);
+
+        nums = new int[]{1,2,3,4,5,6,7};
+        sol.rotate(nums, 0);
+        Assert.assertEquals(nums, nums);
+
+        sol.rotate(nums, nums.length);
+        Assert.assertEquals(nums, nums);
+
+        sol.rotate(nums, 3);
+        for(int i=0; i<nums.length; i++){
+            Assert.assertEquals(result[i], nums[i]);
+        }
+    }
 }
