@@ -548,4 +548,144 @@ public class EasySolutionTest {
         result = sol.hasPathSum(tree, 0);
         Assert.assertFalse(result);
     }
+
+    @Test //#110
+    public void testIsBalanced(){
+        System.out.print("TEST #110 Balanced Tree");
+
+        boolean result;
+
+        TreeNode tree = new TreeNode(1);
+        tree.right = new TreeNode(2);
+        tree.right.right = new TreeNode(3);
+        tree.right.right.right = new TreeNode(4);
+        tree.right.right.right.right = new TreeNode(5);
+        result = sol.isBalanced(tree);
+        Assert.assertFalse(result);
+
+        tree.left = new TreeNode(2);
+        tree.right = new TreeNode(2);
+        tree.left.left = new TreeNode(3);
+        tree.left.right = new TreeNode(3);
+        tree.left.left.left = new TreeNode(4);
+        tree.left.left.right = new TreeNode(4);
+        result = sol.isBalanced(tree);
+        Assert.assertFalse(result);
+
+        tree.left = new TreeNode(2);
+        result = sol.isBalanced(tree);
+        Assert.assertTrue(result);
+
+        tree.right = new TreeNode(3);
+        result = sol.isBalanced(tree);
+        Assert.assertTrue(result);
+
+        tree.left.left = new TreeNode(4);
+        tree.left.right = new TreeNode(5);
+        result = sol.isBalanced(tree);
+        Assert.assertTrue(result);
+
+        tree.right.right = new TreeNode(6);
+        tree.right.right.left = new TreeNode(4);
+        result = sol.isBalanced(tree);
+        Assert.assertFalse(result);
+
+        tree.right.right.left.right = new TreeNode(7);
+        result = sol.isBalanced(tree);
+        Assert.assertFalse(result);
+    }
+
+    @Test //#111
+    public void testMinDepth(){
+        System.out.print("TEST #111 Min Depth");
+
+        int result;
+        TreeNode tree = new TreeNode(1);
+        tree.left = new TreeNode(2);
+        result = sol.minDepth(tree);
+        Assert.assertEquals(result, 2);
+
+        tree.right = new TreeNode(3);
+        result = sol.minDepth(tree);
+        Assert.assertEquals(result, 2);
+
+        tree.right.right = new TreeNode(3);
+        tree.right.right.right = new TreeNode(4);
+        tree.right.right.right.right = new TreeNode(5);
+        result = sol.minDepth(tree);
+        Assert.assertEquals(result, 2);
+
+        tree.left.left = new TreeNode(3);
+        tree.left.right = new TreeNode(3);
+        tree.left.left.left = new TreeNode(4);
+        tree.left.left.right = new TreeNode(4);
+        result = sol.minDepth(tree);
+        Assert.assertEquals(result, 3);
+
+        tree.right.right.left = new TreeNode(4);
+        tree.right.right.left.right = new TreeNode(7);
+        result = sol.minDepth(tree);
+        Assert.assertEquals(result, 3);
+    }
+
+    @Test //#198
+    public void testHouseRobber(){
+        System.out.print("TEST #198 House Robber");
+
+        int result;
+
+        result = sol.rob(new int[0]);
+        Assert.assertEquals(result, 0);
+        result = sol.rob(new int[]{3});
+        Assert.assertEquals(result, 3);
+
+        result = sol.rob(new int[]{1,3,1});
+        Assert.assertEquals(result, 3);
+
+        result = sol.rob(new int[]{3, 5});
+        Assert.assertEquals(result, 5);
+
+        result = sol.rob(new int[]{1000, 5, 2, 2000, 4, 5});
+        Assert.assertEquals(result, 3005);
+    }
+
+    @Test //#158
+    public void testLengthWorld(){
+        System.out.print("TEST #158 Length String");
+
+        int result;
+
+        result = sol.lengthOfLastWord("");
+        Assert.assertEquals(result, 0);
+        result = sol.lengthOfLastWord(" ");
+        Assert.assertEquals(result, 0);
+        result = sol.lengthOfLastWord("qsdq");
+        Assert.assertEquals(result, 4);
+        result = sol.lengthOfLastWord("dd zzrr zrr");
+        Assert.assertEquals(result, 3);
+        result = sol.lengthOfLastWord("qsdq      ");
+        Assert.assertEquals(result, 4);
+    }
+
+    @Test //#217
+    public void testContainsDuplicate(){
+        System.out.print("TEST #217 Contains Duplicate");
+
+        boolean result;
+
+        result = sol.containsDuplicate(new int[0]);
+        Assert.assertFalse(result);
+        result = sol.containsDuplicate(new int[]{3});
+        Assert.assertFalse(result);
+        result = sol.containsDuplicate(new int[]{3,2});
+        Assert.assertFalse(result);
+        result = sol.containsDuplicate(new int[]{3,3});
+        Assert.assertTrue(result);
+        result = sol.containsDuplicate(new int[]{2,3,4,5,3});
+        Assert.assertTrue(result);
+        result = sol.containsDuplicate(new int[]{2,3,4,5,4,3,1});
+        Assert.assertTrue(result);
+        result = sol.containsDuplicate(new int[]{2,3,4,5,6,7,1});
+        Assert.assertFalse(result);
+    }
 }

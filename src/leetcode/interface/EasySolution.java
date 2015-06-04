@@ -35,4 +35,16 @@ public interface EasySolution {
     public boolean isSameTree(TreeNode p, TreeNode q); //#100 : Same Tree
 
     public boolean hasPathSum(TreeNode root, int sum); //#112 : Path Sum
+
+    public boolean isBalanced(TreeNode root); //#110 : Balanced Binary Tree
+
+    public int maxDepth(TreeNode root); //#104 : Maximum Depth of Binary Tree
+
+    public int minDepth(TreeNode root); //#111 : Minimum Depth of Binary Tree
+
+    public int rob(int[] nums); //#198 : House Robber
+
+    public int lengthOfLastWord(String s); //#58 : Length of Last Word
+
+    public boolean containsDuplicate(int[] nums); //#217 : Contains Duplicate
 }

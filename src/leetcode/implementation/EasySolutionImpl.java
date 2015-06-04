@@ -1,3 +1,4 @@
+import com.sun.deploy.util.ArrayUtil;
 import com.sun.source.tree.Tree;
 
 import java.util.*;
@@ -539,5 +540,97 @@ public class EasySolutionImpl implements EasySolution {
         }
 
         return isEqual;
+    }
+
+
+    /**
+     * #110 : Balanced Binary Tree
+     */
+    public boolean isBalanced(TreeNode root) {
+        if(root == null) return true;
+
+        int leftHeight = root.left == null ? 0 : 1+getMaxHeight(root.left);
+        int rightHeight = root.right == null ? 0 : 1+getMaxHeight(root.right);
+
+        if(leftHeight <= rightHeight + 1 && leftHeight >= rightHeight - 1){
+            return isBalanced(root.left) && isBalanced(root.right);
+        } else return false;
+    }
+
+    private int getMaxHeight(TreeNode node){
+        if(node == null) return 0;
+
+        return 1+Math.max(getMaxHeight(node.left), getMaxHeight(node.right));
+    }
+
+
+    /**
+     * #104 : Maximum Depth of Binary Tree
+     */
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+
+        return 1+Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+
+
+    /**
+     * #111 : Minimum Depth of Binary Tree
+     */
+    public int minDepth(TreeNode root) {
+        if(root == null) return 0;
+        if(root.left == null && root.right == null) return 1;
+
+        if(root.left == null) return 1+minDepth(root.right);
+        else if(root.right == null) return 1+minDepth(root.left);
+        else return 1+Math.min(minDepth(root.left), minDepth(root.right));
+    }
+
+
+    /**
+     * #198 : House Robber
+     */
+    public int rob(int[] nums) {
+        if(nums.length == 0) return 0;
+        if(nums.length == 1) return nums[0];
+        if(nums.length == 2) return Math.max(nums[0], nums[1]);
+
+        int[] robbebNums = nums.clone();
+
+        for(int i=0; i<nums.length; i++){
+            int houseValue = robbebNums[i];
+            for(int j = i+2; j<nums.length; j++){
+                robbebNums[j] = Math.max(robbebNums[j], nums[j] + houseValue);
+            }
+        }
+
+        Arrays.sort(robbebNums);
+        return robbebNums[robbebNums.length-1];
+    }
+
+
+    /**
+     * #58 : Length of Last Word
+     */
+    public int lengthOfLastWord(String s) {
+        if(s.isEmpty()) return 0;
+
+        String[] strings = s.split(" ");
+        if(strings.length < 1) return 0;
+        else return strings[strings.length-1].length();
+    }
+
+
+    /**
+     * #217 : Contains Duplicate
+     */
+    public boolean containsDuplicate(int[] nums) {
+        if(nums.length <= 1) return false;
+
+        Set<Integer> numsSet = new HashSet<Integer>();
+        // TODO : use Arrays.stream(nums).boxed().collect(Collectors.toList()) with Java 8
+        for(int i=0; i<nums.length; i++) numsSet.add(nums[i]);
+
+        return numsSet.size() != nums.length;
     }
 }
