@@ -1,3 +1,5 @@
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 
 public class EasySolutionImpl implements EasySolution {
@@ -425,5 +427,117 @@ public class EasySolutionImpl implements EasySolution {
         list.get(list.size() - level - 1).add(node.val);
         traverse(list, level + 1, node.left);
         traverse(list, level + 1, node.right);
+    }
+
+
+    /**
+     * #101 : Symmetric Tree
+     */
+    public boolean isSymmetric2(TreeNode root) {
+        if(root == null || (root.left == null && root.right == null)) return true;
+
+        return isSameRoots(root.left, root.right);
+    }
+
+    private boolean isSameRoots(TreeNode leftRoot, TreeNode rightRoot){
+        if(leftRoot == null && rightRoot == null) return true;
+        else if(leftRoot == null || rightRoot == null) return false;
+
+        if(leftRoot.val == rightRoot.val){
+            return isSameRoots(leftRoot.left, rightRoot.right) && isSameRoots(leftRoot.right, rightRoot.left);
+        } else return false;
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null || (root.left == null && root.right == null)) return true;
+
+        boolean result = true;
+        Deque<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root.left);
+        queue.add(root.right);
+
+        while(!queue.isEmpty() && result){
+            TreeNode leftNode = queue.remove();
+            if(queue.isEmpty()) result = false;
+            TreeNode rightNode = queue.remove();
+
+            if(leftNode != null && rightNode != null && leftNode.val == rightNode.val){
+                queue.add(leftNode.left);
+                queue.add(rightNode.right);
+                queue.add(leftNode.right);
+                queue.add(rightNode.left);
+            } else if(leftNode != null || rightNode != null) result = false;
+        }
+        return result;
+    }
+
+
+    /**
+     * #100 : Same Tree
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p == null && q == null) return true;
+        if(p == null || q == null) return false;
+
+        if(p.val == q.val) return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+        else return false;
+    }
+
+
+    /**
+     * #112 : Path Sum
+     */
+    public boolean hasPathSum2(TreeNode root, int sum) {
+        if(root == null) return false;
+        if(sum == root.val) return root.left == null && root.right == null;
+
+        Deque<TreeNode> queue = new LinkedList<TreeNode>();
+        HashMap<TreeNode, Boolean> checkedMap = new HashMap<TreeNode, Boolean>();
+        boolean isEqual = false;
+        int pathSum = 0;
+
+        queue.add(root);
+        while(!queue.isEmpty() && !isEqual && (checkedMap.get(root) == null || !checkedMap.get(root))){
+            TreeNode node = queue.remove();
+
+            if(checkedMap.get(node) == null || !checkedMap.get(node)){
+                pathSum += node.val;
+
+                if(node.left != null && (checkedMap.get(node.left) == null || !checkedMap.get(node.left))) queue.add(node.left);
+                else if(node.right != null && (checkedMap.get(node.right) == null || !checkedMap.get(node.right))) queue.add(node.right);
+                else checkedMap.put(node, true);
+
+                if(node.left == null && node.right == null) isEqual = pathSum == sum;
+                if(queue.isEmpty()){
+                    queue.add(root);
+                    pathSum = 0;
+                }
+            }
+        }
+
+        return isEqual;
+    }
+
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if(root == null) return false;
+
+        Deque<TreeNode> queue = new LinkedList<TreeNode>();
+        HashMap<TreeNode, Boolean> checkedMap = new HashMap<TreeNode, Boolean>();
+        boolean isEqual = false;
+
+        queue.add(root);
+        while(!queue.isEmpty() && !isEqual && (checkedMap.get(root) == null || !checkedMap.get(root))){
+            TreeNode node = queue.remove();
+
+            if(checkedMap.get(node) == null || !checkedMap.get(node)){
+                if(node.left != null) isEqual = hasPathSum(node.left, sum - node.val);
+                if(!isEqual && node.right != null)
+                    isEqual = hasPathSum(root.right, sum - node.val);
+                else if(node.left == null && node.right == null) isEqual = sum == node.val;
+                checkedMap.put(root, true);
+            }
+        }
+
+        return isEqual;
     }
 }

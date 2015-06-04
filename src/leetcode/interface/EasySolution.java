@@ -30,4 +30,9 @@ public interface EasySolution {
 
     public List<List<Integer>> levelOrderBottom(TreeNode root); //#109 : Binary Tree Level Order Traversal II
 
+    public boolean isSymmetric(TreeNode root); //#101 : Symmetric Tree
+
+    public boolean isSameTree(TreeNode p, TreeNode q); //#100 : Same Tree
+
+    public boolean hasPathSum(TreeNode root, int sum); //#112 : Path Sum
 }

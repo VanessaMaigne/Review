@@ -422,4 +422,130 @@ public class EasySolutionTest {
         listResult = sol.levelOrderBottom(tree);
         Assert.assertEquals(listResult, treeList);
     }
+
+    @Test  //#101
+    public void testSymetricTree(){
+        System.out.print("TEST #101 Symetric Tree");
+
+        boolean result;
+        TreeNode tree = new TreeNode(1);
+
+        result = sol.isSymmetric(null);
+        Assert.assertTrue(result);
+        result = sol.isSymmetric(tree);
+        Assert.assertTrue(result);
+
+        tree.left = new TreeNode(2);
+        result = sol.isSymmetric(tree);
+        Assert.assertFalse(result);
+
+        tree.right = new TreeNode(2);
+        result = sol.isSymmetric(tree);
+        Assert.assertTrue(result);
+
+        tree.left.right = new TreeNode(3);
+        tree.right.right = new TreeNode(3);
+        result = sol.isSymmetric(tree);
+        Assert.assertFalse(result);
+
+        tree.left.left = new TreeNode(3);
+        tree.left.right = new TreeNode(4);
+        tree.right.left = new TreeNode(4);
+        tree.right.right = new TreeNode(3);
+        tree.left.left.left = new TreeNode(7);
+        tree.left.right.left = new TreeNode(5);
+        tree.right.right.right= new TreeNode(7);
+        tree.right.left.right = new TreeNode(5);
+        result = sol.isSymmetric(tree);
+        Assert.assertTrue(result);
+    }
+
+    @Test  //#100
+    public void testSameTree(){
+        System.out.print("TEST #100 Same Tree");
+
+        boolean result;
+        TreeNode tree1 = new TreeNode(1);
+        TreeNode tree2 = new TreeNode(2);
+
+        result = sol.isSameTree(null, null);
+        Assert.assertTrue(result);
+        result = sol.isSameTree(tree1, null);
+        Assert.assertFalse(result);
+        result = sol.isSameTree(null, tree1);
+        Assert.assertFalse(result);
+        result = sol.isSameTree(tree1, tree2);
+        Assert.assertFalse(result);
+        tree2 = new TreeNode(1);
+        result = sol.isSameTree(tree1, tree2);
+        Assert.assertTrue(result);
+
+        tree1.left = new TreeNode(2);
+        result = sol.isSameTree(tree1, tree2);
+        Assert.assertFalse(result);
+    }
+
+    @Test  //#112
+    public void testPathSum(){
+        System.out.print("TEST #112 Path Sum Tree");
+
+        boolean result;
+        TreeNode tree = new TreeNode(-2);
+        tree.right = new TreeNode(-3);
+        result = sol.hasPathSum(tree, -5);
+        Assert.assertTrue(result);
+
+        tree = new TreeNode(1);
+        tree.left = new TreeNode(-2);
+        tree.right = new TreeNode(-3);
+        tree.left.left = new TreeNode(1);
+        tree.left.right = new TreeNode(3);
+        tree.right.left = new TreeNode(-2);
+        tree.left.left.left = new TreeNode(-1);
+        result = sol.hasPathSum(tree, -1);
+        Assert.assertTrue(result);
+
+        tree = new TreeNode(1);
+
+        result = sol.hasPathSum(null, 0);
+        Assert.assertFalse(result);
+        result = sol.hasPathSum(tree, 1);
+        Assert.assertTrue(result);
+        result = sol.hasPathSum(tree, 2);
+        Assert.assertFalse(result);
+
+        tree.left = new TreeNode(2);
+        result = sol.hasPathSum(tree, 1);
+        Assert.assertFalse(result);
+        result = sol.hasPathSum(tree, 2);
+        Assert.assertFalse(result);
+        result = sol.hasPathSum(tree, 3);
+        Assert.assertTrue(result);
+
+        tree.left.left = new TreeNode(3);
+        tree.left.left.left = new TreeNode(4);
+        tree.left.left.left.left = new TreeNode(5);
+        result = sol.hasPathSum(tree, 6);
+        Assert.assertFalse(result);
+
+        tree.right = new TreeNode(3);
+        tree.left.left = new TreeNode(4);
+        tree.left.right = new TreeNode(5);
+        tree.right.right = new TreeNode(6);
+        tree.right.right.left = new TreeNode(4);
+        result = sol.hasPathSum(tree, 8);
+        Assert.assertTrue(result);
+        result = sol.hasPathSum(tree, 7);
+        Assert.assertTrue(result);
+        result = sol.hasPathSum(tree, 4);
+        Assert.assertFalse(result);
+        result = sol.hasPathSum(tree, 10);
+        Assert.assertFalse(result);
+        result = sol.hasPathSum(tree, 14);
+        Assert.assertTrue(result);
+        result = sol.hasPathSum(tree, 50);
+        Assert.assertFalse(result);
+        result = sol.hasPathSum(tree, 0);
+        Assert.assertFalse(result);
+    }
 }
