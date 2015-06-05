@@ -685,7 +685,116 @@ public class EasySolutionTest {
         Assert.assertTrue(result);
         result = sol.containsDuplicate(new int[]{2,3,4,5,4,3,1});
         Assert.assertTrue(result);
-        result = sol.containsDuplicate(new int[]{2,3,4,5,6,7,1});
+        result = sol.containsDuplicate(new int[]{2, 3, 4, 5, 6, 7, 1});
         Assert.assertFalse(result);
+    }
+
+    @Test //#202
+    public void testHappyNumber(){
+        System.out.print("TEST #202 Happy Number");
+
+        boolean result;
+
+        result = sol.isHappy(2);
+        Assert.assertFalse(result);
+        result = sol.isHappy(0);
+        Assert.assertFalse(result);
+        result = sol.isHappy(1);
+        Assert.assertTrue(result);
+        result = sol.isHappy(-10);
+        Assert.assertFalse(result);
+        result = sol.isHappy(7);
+        Assert.assertTrue(result);
+        result = sol.isHappy(10);
+        Assert.assertTrue(result);
+        result = sol.isHappy(19);
+        Assert.assertTrue(result);
+        result = sol.isHappy(9011);
+        Assert.assertFalse(result);
+    }
+
+    @Test //#191
+    public void testNumberOneBit(){
+        System.out.print("TEST #191 Number One Bit");
+
+        int result;
+
+        result = sol.hammingWeight(0);
+        Assert.assertEquals(result, 0);
+        result = sol.hammingWeight(-3);
+        Assert.assertEquals(result, 0);
+        result = sol.hammingWeight(1);
+        Assert.assertEquals(result, 1);
+        result = sol.hammingWeight(10);
+        Assert.assertEquals(result, 2);
+        result = sol.hammingWeight(11);
+        Assert.assertEquals(result, 3);
+//        result = sol.hammingWeight(2147483648);
+//        Assert.assertEquals(result, 1);
+    }
+
+    @Test //#9
+    public void testPalindromeNumber(){
+        System.out.print("TEST #9 Palindrome Number");
+
+        boolean result;
+
+        result = sol.isPalindrome(0);
+        Assert.assertTrue(result);
+        result = sol.isPalindrome(3);
+        Assert.assertTrue(result);
+        result = sol.isPalindrome(-3);
+        Assert.assertFalse(result);
+        result = sol.isPalindrome(10);
+        Assert.assertFalse(result);
+        result = sol.isPalindrome(11);
+        Assert.assertTrue(result);
+        result = sol.isPalindrome(1045401);
+        Assert.assertTrue(result);
+        result = sol.isPalindrome(10465401);
+        Assert.assertFalse(result);
+    }
+
+    @Test //#21
+    public void testMergeList(){
+        System.out.print("TEST #21 Merge Two Sorted List");
+
+        ListNode result;
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(3);
+        ListNode l2 = new ListNode(4);
+        l2.next = new ListNode(5);
+        l2.next.next = new ListNode(6);
+        ListNode l3 = new ListNode(1);
+        l3.next = new ListNode(2);
+
+        result = sol.mergeTwoLists(null, null);
+        Assert.assertEquals(result, null);
+        result = sol.mergeTwoLists(l1, null);
+        Assert.assertEquals(result, l1);
+        result = sol.mergeTwoLists(null, l2);
+        Assert.assertEquals(result, l2);
+        result = sol.mergeTwoLists(new ListNode(1), new ListNode(2));
+        Assert.assertEquals(result, l3);
+        result = sol.mergeTwoLists(new ListNode(2), new ListNode(1));
+        Assert.assertEquals(result, l3);
+
+        l3.next.next = new ListNode(3);
+        l3.next.next.next = new ListNode(4);
+        l3.next.next.next.next = new ListNode(5);
+        l3.next.next.next.next.next = new ListNode(6);
+        result = sol.mergeTwoLists(l1, l2);
+        Assert.assertEquals(result, l3);
+
+        l1.next = new ListNode(3);
+        l1.next.next = new ListNode(4);
+        l2 = new ListNode(0);
+        l3 = new ListNode(0);
+        l3.next = new ListNode(1);
+        l3.next.next = new ListNode(3);
+        l3.next.next.next = new ListNode(4);
+        result = sol.mergeTwoLists(l1, l2);
+        Assert.assertEquals(result, l3);
     }
 }

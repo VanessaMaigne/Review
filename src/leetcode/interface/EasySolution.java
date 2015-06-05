@@ -47,4 +47,12 @@ public interface EasySolution {
     public int lengthOfLastWord(String s); //#58 : Length of Last Word
 
     public boolean containsDuplicate(int[] nums); //#217 : Contains Duplicate
+
+    public boolean isHappy(int n); //#202 : Happy Number
+
+    public int hammingWeight(int n); //#191 : Number of 1 Bits
+
+    public boolean isPalindrome(int x); //#9 : Palindrome Number
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2); //#21 : Merge Two Sorted Lists
 }

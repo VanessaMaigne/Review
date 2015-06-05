@@ -633,4 +633,121 @@ public class EasySolutionImpl implements EasySolution {
 
         return numsSet.size() != nums.length;
     }
+
+
+    /**
+     * #202 : Happy Number
+     */
+    public boolean isHappy(int n) {
+        if(n==1 || n==7) return true;
+        if(n<10) return false;
+        double value = Math.log10(n);
+        if(value == Math.round(value)) return true;
+
+        char[] chars = String.valueOf(n).toCharArray();
+        n=0;
+        for(int i=0; i<chars.length; i++){
+            n += Math.pow(Character.getNumericValue(chars[i]), 2);
+        }
+        return isHappy(n);
+    }
+
+
+    /**
+     * #191 : Number of 1 Bits
+     */
+    public int hammingWeight(int n) {
+        return Integer.bitCount(n);
+//        if(n<=0) return 0;
+//        String binaryN = Integer.toBinaryString(n);
+//        int result = 0;
+//        for(int i=0; i<binaryN.length(); i++){
+//            if(binaryN.charAt(i) == '1') result++;
+//        }
+//        return result;
+    }
+
+
+    /**
+     * #9 : Palindrome Number
+     */
+    public boolean isPalindrome(int x) {
+        if(x<0) return false;
+        if(x<10) return true;
+
+        boolean isPalindrome = true;
+        String xString = String.valueOf(x);
+        int i=0;
+        while(i<xString.length() && isPalindrome){
+            isPalindrome = xString.charAt(i) == xString.charAt(xString.length()-1-i);
+            i++;
+        }
+        return isPalindrome;
+    }
+
+
+    /**
+     * #21 : Merge Two Sorted Lists
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null) return l2;
+        if(l2 == null) return l1;
+        if(l1.next == null && l2.next == null){
+            if(l1.val <= l2.val){
+                l1.next = l2;
+                return l1;
+            } else {
+                l2.next = l1;
+                return l2;
+            }
+        }
+
+        ListNode temp;
+        if(l1.val > l2.val){
+            temp = l1;
+            l1 = l2;
+            l2 = temp;
+        }
+        ListNode temp1 = l1;
+        ListNode temp2 = l2;
+        temp = l1.next;
+
+        while(temp != null || temp2 != null){
+            if(temp2 != null  && (temp == null || temp2.val <= temp.val)){
+                temp1.next = temp2;
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            } else {
+                temp1.next = temp;
+                temp = temp.next;
+                temp1 = temp1.next;
+            }
+        }
+        return l1;
+    }
+
+    public ListNode mergeTwoListswithoutOrder(ListNode l1, ListNode l2) {
+        if(l1 == null) return l2;
+        if(l2 == null) return l1;
+
+        ListNode temp1 = l1;
+        ListNode temp2 = l2;
+        ListNode temp = l1.next;
+        int i=0;
+
+        while(temp != null || temp2 != null){
+            if(i%2==0 && temp2 != null){
+                temp1.next = temp2;
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            } else if(temp != null){
+                temp1.next = temp;
+                temp = temp.next;
+                temp1 = temp1.next;
+            }
+            i++;
+        }
+        return l1;
+    }
+
 }
