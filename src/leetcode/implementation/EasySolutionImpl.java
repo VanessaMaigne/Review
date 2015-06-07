@@ -1,6 +1,3 @@
-import com.sun.deploy.util.ArrayUtil;
-import com.sun.source.tree.Tree;
-
 import java.util.*;
 
 public class EasySolutionImpl implements EasySolution {
@@ -750,4 +747,90 @@ public class EasySolutionImpl implements EasySolution {
         return l1;
     }
 
+
+    /**
+     * #118 : Pascal's Triangle
+     */
+    public List<List<Integer>> generate(int numRows) {
+        if(numRows <= 0) return new ArrayList<List<Integer>>();
+
+        List<List<Integer>> result = new ArrayList<List<Integer>>(){{add(new ArrayList<Integer>(){{add(1);}});}};
+
+        for(int i=1;i<numRows;i++){
+            List<Integer> temp = new ArrayList<Integer>(){{add(1);}};
+            List<Integer> integers = result.get(i-1);
+            if(integers.size() > 1){
+                for(int j=0; j<integers.size()-1; j++) temp.add(integers.get(j)+integers.get(j+1));
+            }
+            temp.add(1);
+            result.add(temp);
+        }
+        return result;
+    }
+
+
+    /**
+     * #119 : Pascal's Triangle II
+     */
+    public List<Integer> getRow(int rowIndex) {
+        if(rowIndex < 0) return new ArrayList<Integer>();
+
+        List<List<Integer>> result = new ArrayList<List<Integer>>(){{add(new ArrayList<Integer>(){{add(1);}});}};
+
+        for(int i=1;i<=rowIndex;i++){
+            List<Integer> temp = new ArrayList<Integer>(){{add(1);}};
+            List<Integer> integers = result.get(i-1);
+            if(integers.size() > 1){
+                for(int j=0; j<integers.size()-1; j++) temp.add(integers.get(j)+integers.get(j+1));
+            }
+            temp.add(1);
+            result.add(temp);
+        }
+        return result.get(rowIndex);
+    }
+
+
+    /**
+     * #160 : Intersection of Two Linked Lists
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null) return null;
+
+        ListNode tempA = headA;
+        ListNode tempB = headB;
+        ListNode intersectionNode = null;
+
+        while((tempA!=null || tempB!=null) && intersectionNode==null){
+            if(tempA!= null && tempB!=null && tempA.val == tempB.val){
+                intersectionNode = tempA;
+                while(tempA != null && tempB != null){
+                    tempA = tempA.next;
+                    tempB = tempB.next;
+                }
+                if(tempA != null || tempB != null)
+                    intersectionNode = null;
+            } else if(tempA == null && tempB != null){
+                tempB = tempB.next;
+                tempA = headA;
+            }
+            else
+                tempA = tempA.next;
+        }
+        return intersectionNode;
+    }
+
+
+    /**
+     * #83 : Remove Duplicates from Sorted List
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null) return head;
+
+        ListNode temp = head;
+        while(temp != null){
+            if(temp.next != null && temp.val == temp.next.val) temp.next = temp.next.next;
+            else temp = temp.next;
+        }
+        return head;
+    }
 }

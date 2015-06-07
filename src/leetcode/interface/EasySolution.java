@@ -55,4 +55,12 @@ public interface EasySolution {
     public boolean isPalindrome(int x); //#9 : Palindrome Number
 
     public ListNode mergeTwoLists(ListNode l1, ListNode l2); //#21 : Merge Two Sorted Lists
+
+    public List<List<Integer>> generate(int numRows); //#118 : Pascal's Triangle
+
+    public List<Integer> getRow(int rowIndex); //#119 : Pascal's Triangle II
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB); //#160 : Intersection of Two Linked Lists
+
+    public ListNode deleteDuplicates(ListNode head); //#83 : Remove Duplicates from Sorted List
 }

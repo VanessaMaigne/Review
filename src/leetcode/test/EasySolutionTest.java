@@ -797,4 +797,93 @@ public class EasySolutionTest {
         result = sol.mergeTwoLists(l1, l2);
         Assert.assertEquals(result, l3);
     }
+
+    @Test //#118 & #119
+    public void testPascalTriangle(){
+        System.out.print("TEST #118 & #119 Pascal Triangle");
+
+        List<List<Integer>> result;
+
+        result = sol.generate(-10);
+        Assert.assertEquals(result, new ArrayList<List<Integer>>());
+        result = sol.generate(1);
+        Assert.assertEquals(result, new ArrayList<List<Integer>>(){{add(new ArrayList<Integer>(){{add(1);}});}});
+        result = sol.generate(2);
+        Assert.assertEquals(result, new ArrayList<List<Integer>>(){{add(new ArrayList<Integer>(){{add(1);}}); add(new ArrayList<Integer>(){{add(1);add(1);}});}});
+        result = sol.generate(3);
+        result = sol.generate(4);
+        result = sol.generate(5);
+
+        List<Integer> resultRow;
+        resultRow = sol.getRow(0);
+        Assert.assertEquals(resultRow, new ArrayList<Integer>(){{add(1);}});
+        resultRow = sol.getRow(3);
+    }
+
+    @Test //#160
+    public void testIntersectionNode(){
+        System.out.print("TEST #160 Intersection Node");
+
+        ListNode result;
+        ListNode l1 = new ListNode(1);
+        ListNode l2 = new ListNode(4);
+
+        result = sol.getIntersectionNode(null, null);
+        Assert.assertEquals(result, null);
+        result = sol.getIntersectionNode(l2, l1);
+        Assert.assertEquals(result, null);
+
+        l1.next = new ListNode(4);
+        result = sol.getIntersectionNode(l2, l1);
+        Assert.assertEquals(result, new ListNode(4));
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(7);
+        l1.next.next.next = new ListNode(8);
+        l2.next = new ListNode(5);
+        l2.next.next = new ListNode(6);
+        l2.next.next.next = new ListNode(7);
+        l2.next.next.next.next = new ListNode(8);
+        ListNode l3 = new ListNode(7);
+        l3.next = new ListNode(8);
+        result = sol.getIntersectionNode(l2, l1);
+        Assert.assertEquals(result, l3);
+
+        l1.next.next.next.next = new ListNode(9);
+        result = sol.getIntersectionNode(l2, l1);
+        Assert.assertEquals(result, null);
+    }
+
+    @Test //#183
+    public void testRemoveDuplicate(){
+        System.out.print("TEST #83 Remove Duplicate");
+
+        ListNode result;
+        ListNode l1 = new ListNode(1);
+        ListNode l3;
+
+        result = sol.deleteDuplicates(null);
+        Assert.assertEquals(result, null);
+        result = sol.deleteDuplicates(l1);
+        Assert.assertEquals(result, new ListNode(1));
+
+        l1.next = new ListNode(1);
+        result = sol.deleteDuplicates(l1);
+        Assert.assertEquals(result, new ListNode(1));
+
+        l1.next = new ListNode(1);
+        l1.next.next = new ListNode(2);
+        l3 = new ListNode(1);
+        l3.next = new ListNode(2);
+        result = sol.deleteDuplicates(l1);
+        Assert.assertEquals(result, l3);
+
+        l1.next = new ListNode(1);
+        l1.next.next = new ListNode(2);
+        l1.next.next.next = new ListNode(3);
+        l1.next.next.next.next = new ListNode(3);
+        l1.next.next.next.next.next = new ListNode(3);
+        l3.next.next = new ListNode(3);
+        result = sol.deleteDuplicates(l1);
+        Assert.assertEquals(result, l3);
+    }
 }
