@@ -12,4 +12,10 @@ public interface MediumSolution {
     public ListNode rotateRight(ListNode head, int k); //#61 : Rotate List
 
     public ListNode reverseBetween(ListNode head, int m, int n); //#92 : Reverse Linked List II
+
+    public void reorderList(ListNode head); //143 : Reorder List
+
+    public ListNode partition(ListNode head, int x); //#86 : Partition List
+
+    public String reverseWords(String s); //#151 : Reverse Words in a String
 }

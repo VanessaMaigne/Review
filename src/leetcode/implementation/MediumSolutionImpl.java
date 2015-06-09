@@ -469,8 +469,98 @@ public class MediumSolutionImpl implements MediumSolution{
      * 143 : Reorder List
      */
     public void reorderList(ListNode head) {
-        if(head == null || head.next == null) return head;
+        if(head != null && head.next != null && head.next.next != null) {
 
+            // Reverse head
+            ListNode temp = head;
+            ListNode reversedHead = null;
+            ListNode tempHead;
+            int size = 0;
+            while(temp != null){
+                tempHead = reversedHead;
+                reversedHead = new ListNode(temp.val);
+                reversedHead.next = tempHead;
+                temp = temp.next;
+                size++;
+            }
+
+            temp = head;
+            int i=0;
+            tempHead = temp.next;
+            ListNode tempReverse;
+            while(i<size/2){
+                temp.next = reversedHead;
+                temp = temp.next;
+                tempReverse = reversedHead.next;
+                temp.next = tempHead;
+                tempHead = tempHead.next;
+                reversedHead = tempReverse;
+                if(i+1<size/2.) temp = temp.next; // At the end, we switch temp only for odd ListNode
+                i++;
+            }
+            temp.next = null;
+        }
     }
 
+
+    /**
+     * #86 : Partition List
+     */
+    public ListNode partition(ListNode head, int x) {
+        if(head == null || head.next == null) return head;
+
+        ListNode temp = head;
+        ListNode nodesToAddBefore = new ListNode(0);
+        ListNode tempNodes = nodesToAddBefore;
+
+        while(temp != null){
+            if(temp.next != null && temp.next.val < x){
+                tempNodes.next = new ListNode(temp.next.val);
+                tempNodes = tempNodes.next;
+                temp.next = temp.next.next;
+            } else temp = temp.next;
+        }
+
+        nodesToAddBefore = nodesToAddBefore.next;
+        if(nodesToAddBefore == null) return head;
+        if(head.val < x){
+            temp = head.next;
+            head.next = nodesToAddBefore;
+            tempNodes.next = temp;
+            return head;
+        } else {
+            tempNodes.next = head;
+            return nodesToAddBefore;
+        }
+    }
+
+
+    /**
+     * #151 : Reverse Words in a String
+     */
+    public String reverseWords(String s) {
+        s = s.trim();
+        if(s.equals("")) return s;
+
+        String result = "";
+        String[] strings = s.split(" ");
+        if(strings.length <= 0) return "";
+        if(strings.length == 1)  return strings[0];
+
+        List<String> stringList = Arrays.asList(strings);
+        Collections.reverse(stringList);
+
+        for(String reverseS : stringList){
+            if(!reverseS.equals(""))result += reverseS+" ";
+        }
+        return result.trim();
+    }
+
+
+    /**
+     * #147 : Insertion Sort List
+     */
+//    public ListNode insertionSortList(ListNode head) {
+//
+//    }
 }

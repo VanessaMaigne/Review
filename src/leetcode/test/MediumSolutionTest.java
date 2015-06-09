@@ -241,6 +241,123 @@ public class MediumSolutionTest {
         l3.next = new ListNode(5);
         result = sol.reverseBetween(l1, 1, 1);
         Assert.assertEquals(result, l3);
+    }
+
+    @Test //#143
+    public void testReorderList(){
+        System.out.print("TEST #143 Reorder List");
+
+        ListNode l1 = new ListNode(1);
+        ListNode l3 = new ListNode(1);
+
+        sol.reorderList(l1);
+        Assert.assertEquals(l1, l3);
+
+        l1.next = new ListNode(2);
+        l3.next = new ListNode(2);
+        sol.reorderList(l1);
+        Assert.assertEquals(l1, l3);
+
+        l1.next.next = new ListNode(3);
+        l3.next = new ListNode(3);
+        l3.next.next = new ListNode(2);
+        sol.reorderList(l1);
+        Assert.assertEquals(l1, l3);
+
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(3);
+        l1.next.next.next = new ListNode(4);
+        l3.next = new ListNode(4);
+        l3.next.next = new ListNode(2);
+        l3.next.next.next = new ListNode(3);
+        sol.reorderList(l1);
+        Assert.assertEquals(l1, l3);
+
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(3);
+        l1.next.next.next = new ListNode(4);
+        l1.next.next.next.next = new ListNode(5);
+        l3 = new ListNode(1);
+        l3.next = new ListNode(5);
+        l3.next.next = new ListNode(2);
+        l3.next.next.next = new ListNode(4);
+        l3.next.next.next.next = new ListNode(3);
+        sol.reorderList(l1);
+        Assert.assertEquals(l1, l3);
+    }
+
+    @Test //#86
+    public void testPartitionList(){
+        System.out.print("TEST #86 Partition List");
+
+        ListNode result;
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(1);
+        ListNode l3 = new ListNode(1);
+        l3.next = new ListNode(1);
+
+        result = sol.partition(null, 3);
+        Assert.assertEquals(result, null);
+        result = sol.partition(l1, 3);
+        Assert.assertEquals(result, l3);
+        result = sol.partition(l1, 0);
+        Assert.assertEquals(result, l3);
+
+        l1 = new ListNode(1);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(4);
+        l1.next.next.next = new ListNode(3);
+        l1.next.next.next.next = new ListNode(2);
+        l1.next.next.next.next.next = new ListNode(5);
+        l1.next.next.next.next.next.next = new ListNode(2);
+        l3 = new ListNode(1);
+        l3.next = new ListNode(2);
+        l3.next.next = new ListNode(2);
+        l3.next.next.next = new ListNode(2);
+        l3.next.next.next.next = new ListNode(4);
+        l3.next.next.next.next.next = new ListNode(3);
+        l3.next.next.next.next.next.next = new ListNode(5);
+        result = sol.partition(l1, 3);
+        Assert.assertEquals(result, l3);
+
+        l1 = new ListNode(4);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(1);
+        l1.next.next.next = new ListNode(3);
+        l1.next.next.next.next = new ListNode(2);
+        l1.next.next.next.next.next = new ListNode(5);
+        l1.next.next.next.next.next.next = new ListNode(2);
+        l3 = new ListNode(2);
+        l3.next = new ListNode(1);
+        l3.next.next = new ListNode(2);
+        l3.next.next.next = new ListNode(2);
+        l3.next.next.next.next = new ListNode(4);
+        l3.next.next.next.next.next = new ListNode(3);
+        l3.next.next.next.next.next.next = new ListNode(5);
+        result = sol.partition(l1, 3);
+        Assert.assertEquals(result, l3);
+    }
+
+    @Test //#151
+    public void testReverseString(){
+        System.out.print("TEST #151 Reverse String");
+
+        String result;
+
+        result = sol.reverseWords("");
+        Assert.assertEquals(result, "");
+        result = sol.reverseWords(" ");
+        Assert.assertEquals(result, "");
+        result = sol.reverseWords("the");
+        Assert.assertEquals(result, "the");
+        result = sol.reverseWords("    ");
+        Assert.assertEquals(result, "");
+        result = sol.reverseWords("the sky ");
+        Assert.assertEquals(result, "sky the");
+        result = sol.reverseWords("the sky    is blue");
+        Assert.assertEquals(result, "blue is sky the");
+        result = sol.reverseWords("the sky is blue");
+        Assert.assertEquals(result, "blue is sky the");
 
 
 
