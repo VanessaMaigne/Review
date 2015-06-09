@@ -6,7 +6,7 @@ public class MediumSolutionImpl implements MediumSolution{
     /**
      * #199 : Binary Tree Right Side View
      */
-    public List<Integer> rightSideView2(TreeNode root) {
+    public List<Integer> rightSideView(TreeNode root) {
         if(root == null) return new ArrayList<Integer>();
 
         List<Integer> result = new ArrayList<Integer>();
@@ -34,8 +34,19 @@ public class MediumSolutionImpl implements MediumSolution{
         return result;
     }
 
+    class Pair<A, B>   {
+        public A fst;
+        public B snd;
+
+        public Pair(A a, B b) {
+            this.fst = a;
+            this.snd = b;
+        }
+
+    }
+
     // Without Pair but 2 HashMap
-    public List<Integer> rightSideView(TreeNode root) {
+    public List<Integer> rightSideView2(TreeNode root) {
         if(root == null) return new ArrayList<Integer>();
 
         List<Integer> result = new ArrayList<Integer>();
@@ -67,6 +78,399 @@ public class MediumSolutionImpl implements MediumSolution{
             }
         }
         return result;
+    }
+
+
+    /**
+     * #200 : Number of Islands
+     */
+    public int numIslands3(char[][] grid) {
+        if(grid == null || grid.length == 0) return 0;
+
+        int result = 0;
+        Deque<int[]> queue = new LinkedList<int[]>();
+        boolean[][] checkedNode = new boolean[grid.length][grid[0].length];
+
+        int i, j;
+        queue.add(new int[]{0,0});
+
+        while(!queue.isEmpty()){
+            int[] node = queue.remove();
+            i = node[0];
+            j = node[1];
+
+            if(!checkedNode[i][j]){
+                checkedNode[i][j] = true;
+
+                // Island if arounded elements are already checked or water
+                if(grid[i][j] == '1' &&
+                        ((i+1 >= grid.length || !checkedNode[i+1][j] || grid[i+1][j] == '0')
+                                && (i-1 <0 || !checkedNode[i-1][j] || grid[i-1][j] == '0')
+                                && (j+1 >= grid[0].length || !checkedNode[i][j+1] || grid[i][j+1] == '0')
+                                && (j-1 <0 || !checkedNode[i][j-1] || grid[i][j-1] == '0'))){
+                    result++;
+                }
+
+                if(i+1<grid.length) queue.add(new int[]{i+1,j});
+                if(i-1>=0) queue.add(new int[]{i-1,j});
+                if(j+1<grid[0].length) queue.add(new int[]{i,j+1});
+                if(j-1>=0) queue.add(new int[]{i,j-1});
+            }
+        }
+
+        return result;
+    }
+
+    public int numIslands(char[][] grid) {
+        if(grid == null || grid.length == 0) return 0;
+
+        int result = 0;
+        Deque<int[]> queue = new LinkedList<int[]>();
+        boolean[][] checkedNode = new boolean[grid.length][grid[0].length];
+
+        int i, j;
+        queue.add(new int[]{0,0});
+
+        while(!queue.isEmpty()){
+            int[] node = queue.remove();
+            i = node[0];
+            j = node[1];
+
+
+            if(!checkedNode[i][j]){
+                checkedNode[i][j] = true;
+
+                // Island if arounded elements are already checked or water
+                boolean bob1 = (i+1 >= grid.length || !checkedNode[i+1][j] || grid[i+1][j] == '0');
+                boolean bob2 = (i-1 <0 || !checkedNode[i-1][j] || grid[i-1][j] == '0');
+                boolean bob3 = (j+1 >= grid[0].length || !checkedNode[i][j+1] || grid[i][j+1] == '0');
+                boolean bob4 = (j-1 <0 || !checkedNode[i][j-1] || grid[i][j-1] == '0');
+                if(grid[i][j] == '1' &&
+                        ((i+1 >= grid.length || !checkedNode[i+1][j] || grid[i+1][j] == '0')
+                                && (i-1 <0 || !checkedNode[i-1][j] || grid[i-1][j] == '0')
+                                && (j+1 >= grid[0].length || !checkedNode[i][j+1] || grid[i][j+1] == '0')
+                                && (j-1 <0 || !checkedNode[i][j-1] || grid[i][j-1] == '0'))){
+                    result++;
+                }
+
+                if(i+1<grid.length) queue.add(new int[]{i+1,j});
+                if(j+1<grid[0].length) queue.add(new int[]{i,j+1});
+                if(i-1>=0) queue.add(new int[]{i-1,j});
+                if(j-1>=0) queue.add(new int[]{i,j-1});
+            }
+        }
+
+        return result;
+    }
+
+    public int numIslands2(char[][] grid) {
+        if (grid.length == 0 || grid == null) {
+            return 0;
+        }
+        int count = 0;
+        boolean[][] marked = new boolean[grid.length][grid[0].length];
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (!marked[i][j] && grid[i][j] == '1') {
+                    dfs(grid, marked, i, j);
+                    count++;
+                }
+            }
+        }
+
+        return count;
+
+    }
+    //depth first search
+    public void dfs(char[][] grid, boolean[][] marked, int i, int j) {
+        //out of bound
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
+            return;
+        }
+        //visited return
+        if (marked[i][j]) {
+            return;
+        }
+        //1 mark, 0 return
+        if (grid[i][j] == '1') {
+            marked[i][j] = true;
+        } else {
+            return;
+        }
+        //left
+        dfs(grid, marked, i-1, j);
+        //right
+        dfs(grid, marked, i+1, j);
+        //up
+        dfs(grid, marked, i, j-1);
+        //down
+        dfs(grid, marked, i, j+1);
+    }
+
+
+    /**
+     * #148 : Sort List
+     */
+    public ListNode sortList(ListNode head) {
+        if(head == null || head.next == null) return head;
+
+        ListNode temp = head;
+
+        // Get head's size
+        int size = 0;
+        while(temp != null){
+            size++;
+            temp = temp.next;
+        }
+
+        temp = head;
+        ListNode left = head;
+        ListNode right;
+
+        // Use of fusion sort to be in O(nlog(n))
+        int i=1;
+        while(temp != null && i<size/2){
+            temp = temp.next;
+            i++;
+        }
+        right = temp.next;
+        temp.next = null;
+
+        left = sortList(left);
+        right = sortList(right);
+
+        // Merge
+        return mergeListNode(left, right);
+    }
+
+    private ListNode mergeListNode(ListNode left, ListNode right){
+        ListNode temp;
+
+        if(right.val < left.val){
+            temp = right;
+            right = left;
+            left = temp;
+        }
+        ListNode tempLeft = left;
+        ListNode tempRight = right;
+
+        boolean isComplete = false;
+        while(!isComplete && (tempLeft!=null || tempRight!=null)){
+            if(tempLeft != null && tempRight != null && tempLeft.next != null){
+                if(tempLeft.next.val <= tempRight.val){
+                    tempLeft = tempLeft.next;
+                } else {
+                    temp = tempLeft.next;
+                    tempLeft.next = tempRight;
+                    tempRight = temp;
+                }
+            } else if (tempLeft.next == null){
+                tempLeft.next = tempRight;
+                isComplete = true;
+            }
+        }
+        return left;
+    }
+
+
+    /**
+     * #24 : Swap Nodes in Pairs
+     */
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null) return head;
+
+        ListNode result = new ListNode(0);
+        result.next = head;
+
+        ListNode tempResult = result;
+        ListNode temp = head;
+
+        while(temp != null && temp.next != null){
+            ListNode first = temp;
+            ListNode second = temp.next;
+            ListNode third = second.next;
+
+            tempResult.next = second;
+            tempResult.next.next = first;
+            tempResult.next.next.next = third;
+            temp = temp.next;
+            tempResult = tempResult.next.next;
+        }
+
+        return  result.next;
+    }
+
+    public ListNode swapPairs3(ListNode head) {
+        if(head==null || head.next==null) return head;
+        ListNode newhead = new ListNode(0);
+        newhead.next = head;
+        ListNode curr = newhead;
+        while(curr.next!=null && curr.next.next!=null) {
+            ListNode first = curr.next;
+            ListNode second = first.next;
+            ListNode nextPair = second.next;
+            curr.next=second;
+            second.next=first;
+            first.next=nextPair;
+            curr=first;
+        }
+        return newhead.next;
+    }
+
+    public ListNode swapPairs2(ListNode head) {
+        if(head == null || head.next == null) return head;
+
+        ListNode result = new ListNode(0);
+        result.next = head;
+
+        ListNode tempResult = result;
+        ListNode tempHead = head;
+        ListNode temp;
+        while(tempHead != null && tempHead.next != null){
+            if(tempHead.next != null){
+                temp = tempHead.next;
+                tempResult.next = tempHead.next;
+                tempHead.next = tempHead.next.next;
+                temp.next = tempHead;
+                tempResult = tempHead;
+                tempHead = tempHead.next;
+            }
+        }
+        return result.next;
+    }
+
+
+    /**
+     * #61 : Rotate List
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head == null || k<=0) return head;
+
+        // Get size to avoid Time Limit exceeded
+        ListNode temp = head;
+        int size = 0;
+        while(temp != null){
+            temp = temp.next;
+            size++;
+        }
+        k = k%size;
+
+        while(k>0){
+            head = moveRight(head);
+            k--;
+        }
+        return head;
+    }
+
+    private ListNode moveRight(ListNode head){
+        if(head == null || head.next == null) return head;
+
+        ListNode tempHead = head;
+        while(tempHead.next != null && tempHead.next.next != null){
+            tempHead = tempHead.next;
+        }
+
+        ListNode temp = new ListNode(tempHead.next.val);
+        tempHead.next = null;
+        temp.next = head;
+
+        return temp;
+    }
+
+
+    /**
+     * #92 : Reverse Linked List II
+     * We suppose 0<=m<=n<=length
+     */
+
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(m>n || m<0 || n<0) return null;
+        if(head == null || head.next == null) return head;
+        if(m==n) return head;
+
+        ListNode temp = head;
+        ListNode beginList = head;
+        ListNode endList = head;
+        ListNode middleList = null;
+        ListNode end = null;
+        int size = 0;
+
+        while(temp!=null && n>0){
+            if(m==1) middleList = temp;
+            if(n==1){
+                end = endList.next;
+                temp.next = null;
+                beginList.next = reverseList(middleList);
+            }
+
+            if(m>2) beginList = beginList.next;
+            if(n>1) endList = endList.next;
+            m--;
+            n--;
+            size++;
+            temp = temp.next;
+        }
+
+        if(end != null){
+            temp = head;
+            while(temp != null && temp.next != null){
+                temp = temp.next;
+            }
+            temp.next = end;
+        }
+
+        return m+size == 1 ? head.next : head;
+    }
+
+    private ListNode reverseList(ListNode head){
+        if(head == null || head.next == null) return head;
+
+        ListNode result = null;
+        while(head != null){
+            ListNode temp = result;
+            result = new ListNode(head.val);
+            result.next = temp;
+            head = head.next;
+        }
+        return result;
+    }
+
+    public ListNode switchBetween(ListNode head, int m, int n) {
+        if(m>n || m<0 || n<0) return null;
+        if(head == null || head.next == null) return head;
+
+        ListNode temp = head;
+        ListNode tempBegin = head;
+        ListNode tempEnd = head;
+        int valueN;
+        int valueM=0;
+
+        while(temp != null && n>0){
+            if(m==1){
+                valueM = temp.val;
+            } else if(n==1){
+                valueN = temp.val;
+                tempBegin.val = valueN;
+                tempEnd.val = valueM;
+            }
+            if(m>1) tempBegin = tempBegin.next;
+            if(n>1)tempEnd = tempEnd.next;
+            m--;
+            n--;
+            temp = temp.next;
+        }
+
+        return head;
+    }
+
+
+    /**
+     * 143 : Reorder List
+     */
+    public void reorderList(ListNode head) {
+        if(head == null || head.next == null) return head;
+
     }
 
 }
