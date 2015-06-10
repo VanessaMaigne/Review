@@ -63,4 +63,6 @@ public interface EasySolution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB); //#160 : Intersection of Two Linked Lists
 
     public ListNode deleteDuplicates(ListNode head); //#83 : Remove Duplicates from Sorted List
+
+    public int majorityElement(int[] nums); //#169 : Majority Element
 }

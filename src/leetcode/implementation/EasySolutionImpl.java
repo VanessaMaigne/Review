@@ -382,7 +382,8 @@ public class EasySolutionImpl implements EasySolution {
 
 
     /**
-     * #109 : Binary Tree Level Order Traversal II
+     * #107 : Binary Tree Level Order Traversal II
+     * BFS
      */
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         if(root == null) return new ArrayList<List<Integer>>();
@@ -430,6 +431,7 @@ public class EasySolutionImpl implements EasySolution {
 
     /**
      * #101 : Symmetric Tree
+     * DFS
      */
     public boolean isSymmetric2(TreeNode root) {
         if(root == null || (root.left == null && root.right == null)) return true;
@@ -472,6 +474,7 @@ public class EasySolutionImpl implements EasySolution {
 
     /**
      * #100 : Same Tree
+     * DFS
      */
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if(p == null && q == null) return true;
@@ -484,6 +487,7 @@ public class EasySolutionImpl implements EasySolution {
 
     /**
      * #112 : Path Sum
+     * DFS
      */
     public boolean hasPathSum2(TreeNode root, int sum) {
         if(root == null) return false;
@@ -542,6 +546,7 @@ public class EasySolutionImpl implements EasySolution {
 
     /**
      * #110 : Balanced Binary Tree
+     * DFS
      */
     public boolean isBalanced(TreeNode root) {
         if(root == null) return true;
@@ -563,6 +568,7 @@ public class EasySolutionImpl implements EasySolution {
 
     /**
      * #104 : Maximum Depth of Binary Tree
+     * DFS
      */
     public int maxDepth(TreeNode root) {
         if(root == null) return 0;
@@ -573,6 +579,7 @@ public class EasySolutionImpl implements EasySolution {
 
     /**
      * #111 : Minimum Depth of Binary Tree
+     * DFS
      */
     public int minDepth(TreeNode root) {
         if(root == null) return 0;
@@ -832,5 +839,29 @@ public class EasySolutionImpl implements EasySolution {
             else temp = temp.next;
         }
         return head;
+    }
+
+
+    /**
+     * #169 : Majority Element
+     */
+    public int majorityElement(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        boolean isOneMajorityElementFound = false;
+
+        int i=0;
+        while(!isOneMajorityElementFound && i<nums.length){
+            Integer number = map.get(nums[i]);
+            if(number != null) map.put(nums[i], number+1);
+            else map.put(nums[i], 1);
+
+            if(map.get(nums[i]) > nums.length/2) isOneMajorityElementFound = true;
+            i++;
+        }
+
+        if(isOneMajorityElementFound) return nums[i-1];
+        else return 0;
     }
 }

@@ -18,4 +18,10 @@ public interface MediumSolution {
     public ListNode partition(ListNode head, int x); //#86 : Partition List
 
     public String reverseWords(String s); //#151 : Reverse Words in a String
+
+    public ListNode insertionSortList(ListNode head); //#147 : Insertion Sort List
+
+    public boolean isValidBST(TreeNode root); //#98 : Validate Binary Search Tree
+
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root); //#103 : Binary Tree Zigzag Level Order Traversal
 }

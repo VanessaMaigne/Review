@@ -358,8 +358,156 @@ public class MediumSolutionTest {
         Assert.assertEquals(result, "blue is sky the");
         result = sol.reverseWords("the sky is blue");
         Assert.assertEquals(result, "blue is sky the");
+    }
+
+    @Test //#147
+    public void testInsertionSortList(){
+        System.out.print("TEST #147 Insertion Sort List");
+
+        ListNode result;
+        ListNode l1 = new ListNode(1);
+        ListNode l3 = new ListNode(1);
+
+        result = sol.insertionSortList(null);
+        Assert.assertEquals(result, null);
+        result = sol.insertionSortList(l1);
+        Assert.assertEquals(result, l3);
+        l1.next = new ListNode(1);
+        l3.next = new ListNode(1);
+        result = sol.insertionSortList(l1);
+        Assert.assertEquals(result, l3);
+
+        l1 = new ListNode(3);
+        l1.next = new ListNode(4);
+        l1.next.next = new ListNode(1);
+        l3 = new ListNode(1);
+        l3.next = new ListNode(3);
+        l3.next.next = new ListNode(4);
+        result = sol.insertionSortList(l1);
+        Assert.assertEquals(result, l3);
 
 
+        l1 = new ListNode(2);
+        l1.next = new ListNode(1);
+        l3.next = new ListNode(2);
+        result = sol.insertionSortList(l1);
+        Assert.assertEquals(result, l3);
 
+        l1 = new ListNode(1);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(1);
+        l3.next = new ListNode(1);
+        l3.next.next = new ListNode(2);
+        result = sol.insertionSortList(l1);
+        Assert.assertEquals(result, l3);
+
+        l1.next = new ListNode(1);
+        l1.next.next = new ListNode(3);
+        l1.next.next.next = new ListNode(1);
+        l1.next.next.next.next = new ListNode(2);
+        l1.next.next.next.next.next = new ListNode(4);
+        l1.next.next.next.next.next.next = new ListNode(1);
+        l3.next = new ListNode(1);
+        l3.next.next = new ListNode(1);
+        l3.next.next.next = new ListNode(1);
+        l3.next.next.next.next = new ListNode(2);
+        l3.next.next.next.next.next = new ListNode(3);
+        l3.next.next.next.next.next.next = new ListNode(4);
+        result = sol.insertionSortList(l1);
+        Assert.assertEquals(result, l3);
+
+        l1 = new ListNode(4);
+        l1.next = new ListNode(19);
+        l1.next.next = new ListNode(14);
+        l1.next.next.next = new ListNode(5);
+        l1.next.next.next.next = new ListNode(-3);
+        l1.next.next.next.next.next = new ListNode(1);
+        l1.next.next.next.next.next.next = new ListNode(8);
+        l3 = new ListNode(-3);
+        l3.next = new ListNode(1);
+        l3.next.next = new ListNode(4);
+        l3.next.next.next = new ListNode(5);
+        l3.next.next.next.next = new ListNode(8);
+        l3.next.next.next.next.next = new ListNode(14);
+        l3.next.next.next.next.next.next = new ListNode(19);
+        result = sol.insertionSortList(l1);
+        Assert.assertEquals(result, l3);
+    }
+
+    @Test //#98
+    public void testBSTTree(){
+        System.out.print("TEST #98 BST Tree");
+
+        TreeNode tree = new TreeNode(4);
+        boolean result;
+
+        result = sol.isValidBST(null);
+        Assert.assertTrue(result);
+        result = sol.isValidBST(tree);
+        Assert.assertTrue(result);
+
+        tree.right = new TreeNode(20);
+        result = sol.isValidBST(tree);
+        Assert.assertFalse(result);
+        tree.left = new TreeNode(9);
+        result = sol.isValidBST(tree);
+        Assert.assertFalse(result);
+
+        tree.left = new TreeNode(2);
+        result = sol.isValidBST(tree);
+        Assert.assertTrue(result);
+
+        tree.left.left = new TreeNode(1);
+        tree.left.right = new TreeNode(30);
+        tree.right.left = new TreeNode(1);
+        tree.right.right = new TreeNode(30);
+        result = sol.isValidBST(tree);
+        Assert.assertFalse(result);
+
+        tree.left.left = new TreeNode(1);
+        tree.left.right = new TreeNode(3);
+        tree.right.left = new TreeNode(3);
+        tree.right.right = new TreeNode(22);
+        result = sol.isValidBST(tree);
+        Assert.assertFalse(result);
+
+        tree.right.left = new TreeNode(5);
+        tree.right.right = new TreeNode(22);
+        result = sol.isValidBST(tree);
+        Assert.assertTrue(result);
+    }
+
+    @Test //#103
+    public void testZizagTree(){
+        System.out.print("TEST #103 Zigzag Tree");
+
+        List<List<Integer>>  result;
+        TreeNode tree = new TreeNode(3);
+        tree.left = new TreeNode(9);
+        tree.right = new TreeNode(20);
+        tree.right.left = new TreeNode(15);
+        tree.right.right = new TreeNode(7);
+
+//        result = sol.zigzagLevelOrder(tree);
+//        Assert.assertTrue(result);
+
+        tree = new TreeNode(1);
+        tree.left = new TreeNode(2);
+        tree.right = new TreeNode(3);
+        tree.left.left = new TreeNode(4);
+        tree.right.right = new TreeNode(5);
+//        result = sol.zigzagLevelOrder(tree);
+
+        tree = new TreeNode(0);
+        tree.left = new TreeNode(2);
+        tree.right = new TreeNode(4);
+        tree.left.left = new TreeNode(1);
+        tree.right.left = new TreeNode(3);
+        tree.right.right = new TreeNode(-1);
+        tree.left.left.left = new TreeNode(5);
+        tree.left.left.right = new TreeNode(1);
+        tree.right.left.right = new TreeNode(6);
+        tree.right.right.right = new TreeNode(8);
+        result = sol.zigzagLevelOrder(tree);
     }
 }

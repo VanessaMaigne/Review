@@ -7,7 +7,7 @@ import java.util.List;
 public class SortTest {
 
 //    Sort sort = new SortImpl();
-    Sort sort = new SortImpl2();
+    Sort sort = new SortImpl3();
     List<Integer> elements = new ArrayList<Integer>(){{add(2); add(5); add(7); add(3); add(11); add(11); add(9); add(1); add(7); add(8);}};
 
     @Test

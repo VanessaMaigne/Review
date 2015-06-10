@@ -886,4 +886,24 @@ public class EasySolutionTest {
         result = sol.deleteDuplicates(l1);
         Assert.assertEquals(result, l3);
     }
+
+    @Test //#169
+    public void testMajorityNumber(){
+        System.out.print("TEST #169 Majority Number");
+
+        int result;
+
+        result = sol.majorityElement(new int[0]);
+        Assert.assertEquals(result, 0);
+        result = sol.majorityElement(new int[]{1});
+        Assert.assertEquals(result, 1);
+        result = sol.majorityElement(new int[]{1, 2});
+        Assert.assertEquals(result, 0);
+        result = sol.majorityElement(new int[]{1, 2, 1});
+        Assert.assertEquals(result, 1);
+
+        result = sol.majorityElement(new int[]{1, 2, 2, 1, 2, 1, 2, 2});
+        Assert.assertEquals(result, 2);
+
+    }
 }

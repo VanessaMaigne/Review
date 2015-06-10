@@ -5,6 +5,7 @@ import java.util.*;
 public class MediumSolutionImpl implements MediumSolution{
     /**
      * #199 : Binary Tree Right Side View
+     * BFS || DFS
      */
     public List<Integer> rightSideView(TreeNode root) {
         if(root == null) return new ArrayList<Integer>();
@@ -42,7 +43,6 @@ public class MediumSolutionImpl implements MediumSolution{
             this.fst = a;
             this.snd = b;
         }
-
     }
 
     // Without Pair but 2 HashMap
@@ -560,7 +560,137 @@ public class MediumSolutionImpl implements MediumSolution{
     /**
      * #147 : Insertion Sort List
      */
-//    public ListNode insertionSortList(ListNode head) {
-//
-//    }
+    public ListNode insertionSortList(ListNode head) {
+        if(head == null || head.next == null) return head;
+
+        ListNode temp = head;
+        head = new ListNode(Integer.MIN_VALUE);
+        head.next = temp;
+        ListNode tempHead = head;
+        ListNode coverHead = head.next;
+
+        while(tempHead != null && coverHead != null && tempHead.next != null && coverHead.next != null){
+            if(coverHead.next.val > tempHead.next.val) {
+                tempHead = tempHead.next;
+            } else if(coverHead == tempHead) {
+                tempHead = head;
+                coverHead = coverHead.next;
+            } else {
+                int value = coverHead.next.val;
+                coverHead.next = coverHead.next.next;
+                temp = tempHead.next;
+                tempHead.next = new ListNode(value);
+                tempHead.next.next = temp;
+                tempHead = head;
+            }
+        }
+
+        return head.next;
+    }
+
+    /**
+     * #98 : Validate Binary Search Tree
+     * DFS
+     */
+    public boolean isValidBST(TreeNode root) {
+        if(root == null || (root.left == null && root.right == null)) return true;
+        if( (root.left == null && root.right != null) || (root.right == null && root.left != null) ) return false;
+        if(root.left.val > root.val || root.right.val < root.val) return false;
+
+        Map<TreeNode, Pair<Integer, Integer>> map = new HashMap<TreeNode, Pair<Integer, Integer>>();
+        map.put(root.left, new Pair<Integer, Integer>(root.left.val,root.val));
+        map.put(root.right, new Pair<Integer, Integer>(root.val, root.right.val));
+
+        return isValidBST(root.left, true, map) && isValidBST(root.right, false, map);
+    }
+
+    private boolean isValidBST(TreeNode root, boolean isLeftTree, Map<TreeNode, Pair<Integer, Integer>> map){
+        if(root==null || (root.left == null && root.right != null) || (root.right == null && root.left != null) ) return false;
+        if(root.left == null && root.right == null) return true;
+
+        TreeNode leftRoot = root.left;
+        TreeNode rightRoot = root.right;
+
+        Pair<Integer, Integer> minAndMax = map.get(root);
+
+        if(isLeftTree){
+            if(minAndMax != null && leftRoot != null && rightRoot != null && leftRoot.val < minAndMax.fst
+                    && rightRoot.val > minAndMax.fst && rightRoot.val < minAndMax.snd) {
+                map.put(leftRoot, new Pair<Integer, Integer>(null, root.val));
+                map.put(rightRoot, new Pair<Integer, Integer>(root.val, minAndMax.snd));
+                return isValidBST(leftRoot, true, map) && isValidBST(rightRoot, true, map);
+            } else return false;
+
+        } else if(minAndMax != null && rightRoot != null && leftRoot != null && rightRoot.val > minAndMax.snd
+                && leftRoot.val > minAndMax.fst && leftRoot.val < minAndMax.snd) {
+            map.put(leftRoot, new Pair<Integer, Integer>(minAndMax.fst, root.val));
+            map.put(rightRoot, new Pair<Integer, Integer>(root.val, null));
+            return isValidBST(leftRoot, false, map) && isValidBST(rightRoot, false, map);
+
+        } else return false;
+    }
+
+
+    /**
+     * #103 : Binary Tree Zigzag Level Order Traversal
+     */
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if(root == null) return new ArrayList<List<Integer>>();
+
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> temp = new ArrayList<Integer>();
+        temp.add(root.val);
+        if(root.left == null && root.right == null) {
+            result.add(temp);
+            return result;
+        }
+
+        Deque<TreeNode> queue = new LinkedList<TreeNode>();
+        HashMap<TreeNode, Integer> map = new HashMap<TreeNode, Integer>();
+        HashMap<Integer, List> mapLevel = new HashMap<Integer, List>();
+
+        queue.add(root);
+
+        map.put(root, 0);
+        mapLevel.put(0, temp);
+
+        while(!queue.isEmpty()){
+            TreeNode node = queue.poll();
+            Integer level = map.get(node);
+            level++;
+
+            List<Integer> zigzagList = new ArrayList<Integer>();
+            if(level%2==0){
+                if(node.left != null) zigzagList.add(node.left.val);
+                if(node.right != null) zigzagList.add(node.right.val);
+            } else {
+                if(node.right != null) zigzagList.add(node.right.val);
+                if(node.left != null) zigzagList.add(node.left.val);
+            }
+            if(zigzagList.size() > 0){
+                temp = mapLevel.get(level);
+                if(temp != null)
+                    if(level%2==0) temp.addAll(zigzagList);
+                    else {
+                        zigzagList.addAll(temp);
+                        temp = zigzagList;
+                    }
+                else temp = zigzagList;
+                mapLevel.put(level, temp);
+            }
+            if(node.left != null) {
+                map.put(node.left, level);
+                queue.add(node.left);
+            }
+            if(node.right != null) {
+                map.put(node.right, level);
+                queue.add(node.right);
+            }
+        }
+
+        for(Integer key : mapLevel.keySet()){
+            result.add(mapLevel.get(key));
+        }
+        return result;
+    }
 }
